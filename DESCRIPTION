@@ -1,0 +1,19 @@
+Package: twilior
+Title: Use the Twilio API with R
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Andrew",
+           family = "Watson",
+           role = c("aut", "cre"),
+           email = "andrew@happycabbage.io")
+Description: This is an API wrapper around the Twilio API that enhances the functionality of the existing twilio package for use of the Twilio API for data science. This one includes downloading bulk SMS, sending notifications with the Notify API, and interacting with Messaging Services. As we develop more workflows with Twlio we will update the package as needed. Please note all necessary legal disclaimers associated with the use of Twilio here https: //www.twilio.com/legal/tos.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr, 
+    httr,
+    lubridate,
+    jsonlite,
+    magrittr
+RoxygenNote: 6.1.1
