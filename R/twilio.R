@@ -99,7 +99,7 @@ tw_get_messaging_service_nums <- function(
   authentication <- httr::authenticate(sid, token)
   response <- httr::GET(url, config = authentication)
   httr::stop_for_status(response)
-  responseContent <- jsonlite::fromJSON(content(response, 'text'))
+  responseContent <- jsonlite::fromJSON(httr::content(response, 'text', encoding = 'UTF-8'))
   numbers <- responseContent$phone_numbers$phone_number
   return(numbers)
 }
@@ -209,7 +209,7 @@ tw_get_messages <- function(
   query <- list(
     DateSent = date,
     To = to,
-    From = from,
+    From = from
   )
 
   response <- httr::GET(
@@ -221,13 +221,18 @@ tw_get_messages <- function(
   if(verbose){message(paste("Pulled down first set of messages from", url))}
 
   # First set of messages
-  responseContent <- jsonlite::fromJSON(content(response, 'text'))
+  responseContent <- jsonlite::fromJSON(httr::content(response, 'text', encoding = 'UTF-8'))
   messages <- responseContent$messages
   messages$subresource_uris <- NULL
 
+  output <- messages %>%
+    `_parse_tw_messages`() %>%
+    dplyr::distinct()
+
   if(get_all) {
-    nextPage <- paste0("https://api.twilio.com",responseContent$next_page_uri)
-    while(!is.null(nextPage)) {
+    nextPageUri <- responseContent$next_page_uri
+    nextPage <- paste0("https://api.twilio.com",nextPageUri)
+    while(!is.null(nextPageUri)) {
 
       # Grab data
       response <- httr::GET(nextPage, config = authentication)
@@ -237,7 +242,7 @@ tw_get_messages <- function(
       # For very large pulls this avoids losing all the data
       # Which is why its preferred than an explicit httr::stop_for_status()
       responseContent <- tryCatch({
-        json <- jsonlite::fromJSON(content(response, 'text'))
+        json <- jsonlite::fromJSON(httr::content(response, 'text', encoding = 'UTF-8'))
       }, error = function(e) {
         warning("Message response content failed: ", nextPage, httr::message_for_status(response))
         return(NULL)
@@ -246,7 +251,8 @@ tw_get_messages <- function(
       # grab shit
       if (!is.null(responseContent)) {
         messages <- responseContent$messages
-        nextPage <- paste0("https://api.twilio.com",responseContent$next_page_uri)
+        nextPageUri <- responseContent$next_page_uri
+        nextPage <- paste0("https://api.twilio.com",nextPageUri)
         messages$subresource_uris <- NULL
 
         # Combine
@@ -259,8 +265,6 @@ tw_get_messages <- function(
       }
     }
 
-  } else {
-    output <- `_parse_tw_messages`(messages)
   }
 
   return(output)
