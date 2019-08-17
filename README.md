@@ -7,7 +7,7 @@ Use the Twilio API with R! A bit more feature rich than `twilio` and on-going de
 Install using `devtools`
 
 ``` r
-devtools::install_github("twilior")
+devtools::install_github("happycabbage/twilior")
 ```
 
 To use you will need to setup an account on [Twilio](twilio.com) and get your Twilio  `ACCOUNT_ID` and `SID_ID` which are needed universally. You can add them to your `.RProfile` or the `config` package if needed to set them as enviornment variables.
