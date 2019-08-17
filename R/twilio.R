@@ -200,7 +200,8 @@ tw_get_messages <- function(
     verbose = FALSE,
     sid = Sys.getenv('TWILIO_SID'),
     token = Sys.getenv('TWILIO_TOKEN'),
-    params = NULL
+    params = NULL,
+    page_size = 50
 ) {
 
   # First Go to endpoint to pull down the first set
@@ -209,7 +210,8 @@ tw_get_messages <- function(
   query <- list(
     DateSent = date,
     To = to,
-    From = from
+    From = from,
+    PageSize = page_size
   )
 
   response <- httr::GET(
