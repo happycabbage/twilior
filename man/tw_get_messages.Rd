@@ -6,7 +6,7 @@
 \usage{
 tw_get_messages(date = NULL, from = NULL, to = NULL,
   get_all = FALSE, verbose = FALSE, sid = Sys.getenv("TWILIO_SID"),
-  token = Sys.getenv("TWILIO_TOKEN"), params = NULL)
+  token = Sys.getenv("TWILIO_TOKEN"), params = NULL, page_size = 50)
 }
 \arguments{
 \item{date}{the date the message was sent. Defaults to \code{NULL} which gives you all dates.}

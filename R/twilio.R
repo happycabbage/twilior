@@ -220,16 +220,22 @@ tw_get_messages <- function(
     query = c(query, params)
   )
   httr::stop_for_status(response)
-  if(verbose){message(paste("Pulled down first set of messages from", url))}
 
   # First set of messages
   responseContent <- jsonlite::fromJSON(httr::content(response, 'text', encoding = 'UTF-8'))
-  messages <- responseContent$messages
-  messages$subresource_uris <- NULL
 
-  output <- messages %>%
-    `_parse_tw_messages`() %>%
-    dplyr::distinct()
+  if(length(responseContent$messages) > 0) {
+    if(verbose){message(paste("Pulled down first set of messages from", url))}
+    messages <- responseContent$messages
+    messages$subresource_uris <- NULL
+    output <- messages %>%
+      `_parse_tw_messages`() %>%
+      dplyr::distinct()
+  } else {
+    warning("No messages in response: ", response$url)
+    output <- NULL
+  }
+
 
   if(get_all) {
     nextPageUri <- responseContent$next_page_uri
@@ -251,7 +257,7 @@ tw_get_messages <- function(
       })
 
       # grab shit
-      if (!is.null(responseContent)) {
+      if (!is.null(responseContent$messages)) {
         messages <- responseContent$messages
         nextPageUri <- responseContent$next_page_uri
         nextPage <- paste0("https://api.twilio.com",nextPageUri)
