@@ -150,22 +150,21 @@ tw_send_messaging_service <- function(
 `_parse_tw_messages` <- function(messages) {
   output <- messages %>%
     dplyr::mutate(
-        date_created = lubridate::dmy_hms(date_created)
-      , date_updated = lubridate::dmy_hms(date_updated)
-      , date_sent    = lubridate::dmy_hms(date_sent)
+        "date_created" = lubridate::dmy_hms(date_created)
+      , "date_updated" = lubridate::dmy_hms(date_updated)
+      , "date_sent"    = lubridate::dmy_hms(date_sent)
     ) %>%
-    dplyr::select(
-        sid
-      , date_created
-      , date_updated
-      , date_sent
-      , to
-      , from
-      , body
-      , status
-      , num_segments
-      , num_media
-      , price
+    dplyr::mutate_if(
+      is.integer,
+      as.character
+    ) %>%
+    dplyr::mutate_if(
+      is.logical,
+      as.character
+    ) %>%
+    dplyr::mutate_if(
+      is.list,
+      ~purrr::map_chr(., jsonlite::toJSON)
     )
 
   return(output)
@@ -182,12 +181,13 @@ tw_send_messaging_service <- function(
 #'
 #' @param date the date the message was sent. Defaults to \code{NULL} which gives you all dates.
 #' @param from the phone number the message was sent from. Defaults to \code{NULL} which gives you all sending phone numbers.
-#' @param to the phone number the message was sent to. Defaults to \code{NULL} which gives you all recieving phone numbers.
+#' @param to the phone number the message was sent to. Defaults to \code{NULL} which gives you all receiving phone numbers.
 #' @param get_all should we get all messages instead of the first 50? Defaults to \code{FALSE}. Caution, lots of messages will take a lot of time.
 #' @param verbose optional for verbose output. Defaults to \code{FALSE}
 #' @param sid Twilio account sid. Defaults to \code{Sys.getenv('TWILIO_SID')}
 #' @param token Twilio account token. Defaults to \code{Sys.getenv('TWILIO_TOKEN')}
-#' @param params optional futher arguments to pass into API query. Should be a named list.
+#' @param page_size Number of messages per page to return. Defaults to 50.
+#' @param params optional further arguments to pass into API query. Should be a named list.
 #'
 #' @import magrittr
 #'
