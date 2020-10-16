@@ -4,10 +4,14 @@
 \alias{tw_notify_twilio}
 \title{Send a message through the Twilio Notify Service.}
 \usage{
-tw_notify_twilio(message, tag,
+tw_notify_twilio(
+  message,
+  tag,
   service_sid = Sys.getenv("TWILIO_NOTIFY_SID"),
-  sid = Sys.getenv("TWILIO_SID"), token = Sys.getenv("TWILIO_TOKEN"),
-  params = NULL)
+  sid = Sys.getenv("TWILIO_SID"),
+  token = Sys.getenv("TWILIO_TOKEN"),
+  params = NULL
+)
 }
 \arguments{
 \item{message}{character string of the text}

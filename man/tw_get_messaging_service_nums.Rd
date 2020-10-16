@@ -4,9 +4,11 @@
 \alias{tw_get_messaging_service_nums}
 \title{Get numbers from a Twilio Messaging Service}
 \usage{
-
-  tw_get_messaging_service_nums(service_sid = Sys.getenv("TWILIO_MESSAGING_SERVICE"),
-  sid = Sys.getenv("TWILIO_SID"), token = Sys.getenv("TWILIO_TOKEN"))
+tw_get_messaging_service_nums(
+  service_sid = Sys.getenv("TWILIO_MESSAGING_SERVICE"),
+  sid = Sys.getenv("TWILIO_SID"),
+  token = Sys.getenv("TWILIO_TOKEN")
+)
 }
 \arguments{
 \item{service_sid}{messaging service sid. Defaults to \code{Sys.getenv('TWILIO_MESSAGING_SERVICE')}.}
