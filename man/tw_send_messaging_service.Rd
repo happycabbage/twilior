@@ -4,10 +4,14 @@
 \alias{tw_send_messaging_service}
 \title{Send SMS via the Twilio Messaging service}
 \usage{
-tw_send_messaging_service(to, message,
+tw_send_messaging_service(
+  to,
+  message,
   service_sid = Sys.getenv("TWILIO_MESSAGING_SERVICE"),
-  sid = Sys.getenv("TWILIO_SID"), token = Sys.getenv("TWILIO_TOKEN"),
-  params = NULL)
+  sid = Sys.getenv("TWILIO_SID"),
+  token = Sys.getenv("TWILIO_TOKEN"),
+  params = NULL
+)
 }
 \arguments{
 \item{to}{the number to send the message to}

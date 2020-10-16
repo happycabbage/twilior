@@ -4,16 +4,24 @@
 \alias{tw_get_messages}
 \title{Get SMS messages.}
 \usage{
-tw_get_messages(date = NULL, from = NULL, to = NULL,
-  get_all = FALSE, verbose = FALSE, sid = Sys.getenv("TWILIO_SID"),
-  token = Sys.getenv("TWILIO_TOKEN"), params = NULL, page_size = 50)
+tw_get_messages(
+  date = NULL,
+  from = NULL,
+  to = NULL,
+  get_all = FALSE,
+  verbose = FALSE,
+  sid = Sys.getenv("TWILIO_SID"),
+  token = Sys.getenv("TWILIO_TOKEN"),
+  params = NULL,
+  page_size = 50
+)
 }
 \arguments{
 \item{date}{the date the message was sent. Defaults to \code{NULL} which gives you all dates.}
 
 \item{from}{the phone number the message was sent from. Defaults to \code{NULL} which gives you all sending phone numbers.}
 
-\item{to}{the phone number the message was sent to. Defaults to \code{NULL} which gives you all recieving phone numbers.}
+\item{to}{the phone number the message was sent to. Defaults to \code{NULL} which gives you all receiving phone numbers.}
 
 \item{get_all}{should we get all messages instead of the first 50? Defaults to \code{FALSE}. Caution, lots of messages will take a lot of time.}
 
@@ -23,7 +31,9 @@ tw_get_messages(date = NULL, from = NULL, to = NULL,
 
 \item{token}{Twilio account token. Defaults to \code{Sys.getenv('TWILIO_TOKEN')}}
 
-\item{params}{optional futher arguments to pass into API query. Should be a named list.}
+\item{params}{optional further arguments to pass into API query. Should be a named list.}
+
+\item{page_size}{Number of messages per page to return. Defaults to 50.}
 }
 \description{
 Get SMS messages from the  \code{"https://api.twilio.com/2010-04-01/Accounts/YOUR_SID/Messages.json"} endpoint.

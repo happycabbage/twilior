@@ -4,8 +4,14 @@
 \alias{tw_send_text}
 \title{Send text with Twilio}
 \usage{
-tw_send_text(to, from, message, sid = Sys.getenv("TWILIO_SID"),
-  token = Sys.getenv("TWILIO_TOKEN"), params = NULL)
+tw_send_text(
+  to,
+  from,
+  message,
+  sid = Sys.getenv("TWILIO_SID"),
+  token = Sys.getenv("TWILIO_TOKEN"),
+  params = NULL
+)
 }
 \arguments{
 \item{to}{number to send the text to}
