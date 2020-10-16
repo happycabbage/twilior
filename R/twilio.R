@@ -95,12 +95,23 @@ tw_get_messaging_service_nums <- function(
   sid         = Sys.getenv('TWILIO_SID'),
   token       = Sys.getenv('TWILIO_TOKEN')
 ) {
+
+  # Get First Set
   url <- paste0("https://messaging.twilio.com/v1/Services/", service_sid,"/PhoneNumbers")
   authentication <- httr::authenticate(sid, token)
   response <- httr::GET(url, config = authentication)
   httr::stop_for_status(response)
   responseContent <- jsonlite::fromJSON(httr::content(response, 'text', encoding = 'UTF-8'))
   numbers <- responseContent$phone_numbers$phone_number
+
+  # Page Through if More than 50
+  while (!is.null(responseContent$meta$next_page_url)) {
+    response <- httr::GET(responseContent$meta$next_page_url, config = authentication)
+    httr::stop_for_status(response)
+    responseContent <- jsonlite::fromJSON(httr::content(response, 'text', encoding = 'UTF-8'))
+    numbers <- c(numbers, responseContent$phone_numbers$phone_number)
+  }
+
   return(numbers)
 }
 
