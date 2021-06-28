@@ -158,12 +158,13 @@ tw_send_messaging_service <- function(
 #' @param messages value on the \code{responseContent$messages} object form the \code{Messages.json} endpoint
 #'
 #' @import magrittr
+#' @importFrom rlang .data
 `_parse_tw_messages` <- function(messages) {
   output <- messages %>%
     dplyr::mutate(
-        "date_created" = lubridate::dmy_hms(date_created)
-      , "date_updated" = lubridate::dmy_hms(date_updated)
-      , "date_sent"    = lubridate::dmy_hms(date_sent)
+        "date_created" = lubridate::dmy_hms(.data[['date_created']])
+      , "date_updated" = lubridate::dmy_hms(.data[['date_updated']])
+      , "date_sent"    = lubridate::dmy_hms(.data[['date_sent']])
     ) %>%
     dplyr::mutate_if(
       is.integer,

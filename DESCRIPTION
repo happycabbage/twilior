@@ -11,9 +11,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    dplyr, 
+    dplyr,
     httr,
     lubridate,
     jsonlite,
-    magrittr
-RoxygenNote: 7.1.0
+    magrittr,
+    data.table,
+    stringr,
+    purrr,
+    rlang
+RoxygenNote: 7.1.1
