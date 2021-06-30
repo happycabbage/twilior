@@ -30,8 +30,8 @@ tl_get_messages(
 \item{params}{optional further arguments to pass into API query. Should be a named list.}
 }
 \description{
-Get SMS messages from the  \code{"https://developers.telnyx.com/docs/api/v1/reports"} endpoint.
+Get SMS messages from the MDR reports endpoint.
 This reporting works as an asynchronous call to the report api and returns a CSV parsed into a data table using \code{fread}
 
-See \href{https://www.twilio.com/docs/sms/services}{here} for more details.
+See \href{https://developers.telnyx.com/docs/api/v1/reports}{here} for more details.
 }
